@@ -1,0 +1,9 @@
+name = VoIP Voicemail Core
+package = VoIP Drupal
+description = VoIP Voicemail
+dependencies[] = voipextension
+dependencies[] = autoload
+dependencies[] = audiofield
+core = 6.x
+files[] = includes/voicemailbox.api.inc
+files[] = includes/voicemailmessage.api.inc

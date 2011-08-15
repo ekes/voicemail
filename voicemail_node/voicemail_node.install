@@ -1,0 +1,36 @@
+<?php
+/**
+ * @file
+ *
+ * Installation hooks and the instructions for the VoIP Voice Mail Module.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function voicemail_node_install() {
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function voicemail_node_uninstall() {
+  // Delete all the existing Voicemail fields from all the content types
+  $node_types = node_get_types();
+  foreach ($node_types as $node_type => $node_type_info) {
+    variable_del('voicemail_node_use_'. $node_type);
+  }
+
+}
+
+/**
+ * Implementation of hook_enable().
+ */
+function voicemail_node_enable() {
+}
+
+/**
+ * Implementation of hook_disable().
+ */
+function voicemail_node_disable() {
+}

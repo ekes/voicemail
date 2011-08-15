@@ -1,0 +1,6 @@
+name = VoIP Node Voicemail
+package = VoIP Drupal
+description = VoIP Voicemail Module for VoIP Node
+dependencies[] = voipnode
+dependencies[] = voicemail
+core = 6.x

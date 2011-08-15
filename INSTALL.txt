@@ -6,36 +6,12 @@ latter has not been tested.
 INSTALLATION
 ------------
 
-1. Install the configure the required modules and their fields.
+1. Install the configure the voicemail_node module and it's dependencies.
 
-2. Make sure before creating cck field of voice mailbox you must have voipextension field in your content type.
+2. Configure audiofield to have player(s) for mp3 and/or wav.
 
-2. Goto Edit of any content type and then check the checkbox Voicemail from the bottom,
-   This option is only available if the selected content type is having VoIP Extension already been associated.
+3. Enable voipnode on a content type.
 
-3. Configure the settings of the newly created field.
+4. Enable voicemail on the voipnode.
 
-
-[VoiceMailBox and VoiceMailMessage API Usage]
-
-// Create a new Voice Message (Sent Message)
-module_load_include('inc', 'voicemail', 'includes/voicemailmessage.api');
-$voicemail_message = new VoicemailMessage(1);
-$voicemail_message->veid = 2;
-$voicemail_message->audioMessageFid = 254;
-$voicemail_message->callerName = 'Vikas Test';
-$voicemail_message->callerNumber = '9818439935';
-
-$mid = $voicemail_message->saveSentMessage();
-
-
-
-// Save a message to Inbox.
-module_load_include('inc', 'voicemail', 'includes/voicemailmessage.api');
-
-$voicemail_message = new VoicemailMessage($mid);
-$voicemail_message->veid = 1; // VoIP Extension of the Receiver
-$voicemail_message->saveInboxMessage();
-
-
-
+5. Configure the settings of the newly created fields.

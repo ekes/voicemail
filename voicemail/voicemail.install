@@ -1,0 +1,143 @@
+<?php
+/**
+ * @file
+ *
+ * Installation hooks and the instructions for the VoIP Voice Mail Module.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function voicemail_install() {
+  drupal_install_schema('voicemail');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function voicemail_uninstall() {
+  // todo remove files
+  drupal_uninstall_schema('voicemail');
+}
+
+/**
+ * Implementation of hook_enable().
+ */
+function voicemail_enable() {
+  // cache_clear_all or module_rebuild_cache needed for autoload?
+}
+
+/**
+ * Implementation of hook_disable().
+ */
+function voicemail_disable() {
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function voicemail_schema() {
+  $schema = array();
+  $schema['voicemail_box_settings'] = array(
+    'description' => t('Contains voicemail box settings'),
+    'fields' => array(
+      'eid' => array(
+        'description' => t('VoIP Extension id: Reference to {voipextensions}.eid.'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'send_notifications' => array(
+        'description' => t('Whether or not send email notifications to this voicemailbox'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'enabled' => array(
+        'description' => t('Status of the voicemail box.'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+    ),
+    'unique keys' => array(
+      'eid' => array('eid')
+    ),
+  );
+
+  $schema['voicemail_message'] = array(
+    'description' => t('Voicemail messages, sent or received.'),
+    'fields' => array(
+      'fid' => array(
+        'description' => t('Audio Message: Reference to {files}.fid.'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'caller_name' => array(
+        'description' => t('Name of the person who sent this message.'),
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'caller_number' => array(
+        'description' => t('Phone number of the sender'),
+        'type' => 'varchar',
+        'length' => '15',
+        'not null' => TRUE,
+      ),
+      'call_id' => array(
+        'description' => t('Message left by Call ID'),
+        'type' => 'text',
+        'size' => 'small',
+        'default' => '',
+      ),
+      'sent_on' => array(
+        'description' => t('Timestamp of sent message.'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('fid'),
+  );
+
+  $schema['voicemail_box'] = array(
+    'description' => t('Voice mail inbox containing received messages.'),
+    'fields' => array(
+      'eid' => array(
+        'description' => t('VoIP Extension id: Reference to {voipextensions}.eid.'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'fid' => array(
+        'description' => t('Message id: Reference to {voicemail_message}.fid.'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'is_new' => array(
+        'description' => t('The status of the message is new or read'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'folder' => array( 
+        'description' => t('Folder for message. Default boxes: inbox, sent'),
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('eid, fid'),
+  );
+
+  return $schema;
+}
