@@ -9,6 +9,8 @@
  * Implementation of hook_install().
  */
 function voicemail_node_install() {
+  // make sure nodeapi fires after the extension has been created/loaded
+  db_query("UPDATE {system} SET weight = 1 WHERE name = 'voicemail_node'");
 }
 
 /**
