@@ -24,7 +24,8 @@ function voicemail_uninstall() {
  * Implementation of hook_enable().
  */
 function voicemail_enable() {
-  // cache_clear_all or module_rebuild_cache needed for autoload?
+  // cache clear required by autoload
+  cache_clear_all();
 }
 
 /**
