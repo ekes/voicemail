@@ -164,7 +164,7 @@ function voicemail_node_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
           $mailbox->save();
         }
         catch (VoicemailBoxNotExistsException $e) {
-          $mailbox = Voicemail::createMailbox($node->voipextension_number, $node->voicemail_enabled);
+          $mailbox = VoicemailBox::createMailbox($node->voipextension_number, $node->voicemail_enabled);
         }
       }
       catch (Exception $e) {
