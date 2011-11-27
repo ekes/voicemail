@@ -60,7 +60,7 @@ function voicemail_node_menu_alter(&$items) {
  */
 function voicemail_node_views_access($node, $account = NULL) {
   if (variable_get('voicemail_node_use_'. $node->type, FALSE) && ! empty($node->voicemail_enabled)) {
-    return node_access('view', $node);
+    return node_access('update', $node);
   }
   return FALSE;
 }
